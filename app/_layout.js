@@ -1,11 +1,7 @@
-import { View, Text } from 'react-native';
+import { Stack } from 'expo-router';
 
-const Home = () => {
-  return (
-    <View>
-      <Text>Home</Text>
-    </View>
-  )
+const Layout = () => {
+  return <Stack />;
 }
 
-export default Home;
+export default Layout;
