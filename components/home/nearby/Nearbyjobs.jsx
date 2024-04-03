@@ -8,19 +8,16 @@ import useFetch from '../../../hook/useFetch';
 
 const Nearbyjobs = () => {
   const router = useRouter();
-
   const { data, isLoading, error } = useFetch(
     'search', {
       query: 'React developer',
       num_pages: 1
     });
 
-    console.log(data);
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Popular jobs</Text>
+        <Text style={styles.headerTitle}>Nearby jobs</Text>
         <TouchableOpacity>
           <Text style={styles.headerBtn}>Show all</Text>
         </TouchableOpacity>
@@ -31,22 +28,18 @@ const Nearbyjobs = () => {
           <ActivityIndicator size="large" colors={COLORS.primary} /> 
         ) : error ? (
           <Text>Something went wrong</Text>
-        ) :
-          <FlatList 
-            data={[1, 2, 3, 4, 5, 6, 7, 8]}
-            renderItem={({ item }) => (
-              <PopularJobCard 
-                item={item}
-              />
-            )}
-            keyExtractor={item => item?.job_id}
-            contentContainerStyle={{ columnGap: SIZES.medium }}
-            horizontal
-          />
-        }
+        ) : (
+          data?.map((job) => (
+            <NearbyJobCard
+              job={job}
+              key={`nearby-job-${job?.job_id}`}
+              handleNavigate={() => router.push(`/job-details/${job.job_id}`)}
+            />
+          ))
+        )}
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default Nearbyjobs
+export default Nearbyjobs;
